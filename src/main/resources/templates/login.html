@@ -21,5 +21,36 @@
     </div>
   </form>
 </div>
+
+<script th:src="@{/layui/layui.js}"></script>
+
+<script>
+  layui.use("form",function () {
+    var form = layui.form;
+    var $ = layui.$;
+    //监听提交
+    form.on("submit(login)",function (data) {
+      //ajax
+      $.ajax({
+        url:"/login",
+        type:"POST",
+        data:data.field,
+        dataType:"json",
+        success: function (result) {
+          if(result.code == "1"){
+            //登录成功提示
+            layer.msg(result.msg,{icon:result.icon,anim:result.anim},function () {
+              location.href = "/index";    //登录成功，转向后台主页
+            });
+          }else{
+            //登录失败提示
+            layer.msg(result.msg,{icon:result.icon,anim:result.anim});
+          }
+        }
+      });
+      return false;
+    });
+  });
+</script>
 </body>
 </html>
