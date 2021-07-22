@@ -58,4 +58,16 @@ public class UserController {
 
         return "index";
     }
+
+    /**
+     * 退出登录
+     */
+    @GetMapping(value = "/logout")
+    public String logout(){
+        //清除Shiro中用户的信息,退出登录
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        //重定向到登录页面
+        return "redirect:/toLogin";
+    }
 }

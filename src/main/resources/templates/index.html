@@ -6,15 +6,101 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <link rel="stylesheet" th:href="@{/admin/style.css}" media="all">
 </head>
-<body>
-    <div class="login-main">
-        <header class="layui-elip">后台首页</header>
-
+<body class="layui-layout-body">
+<!--顶部-->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">医院药品管理系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="/logout">退出系统</a> </li>
+        </ul>
     </div>
-    <script th:src="@{/layui/layui.js}"></script>
-    <script>
+    <!--左侧菜单-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-accordion="true">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="layui-nav-item">药品库存管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="layui-nav-item">药品销售管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="layui-nav-item">药品明细查询</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#" class="site-demo-active" lay-href="https://www.dayi.org.cn/" data-id="1" data-title="药品信息">药品信息</a> </dd>
+                        <dd><a href="#" class="site-demo-active" lay-href="/supplier" data-id="2" data-title="供应商信息">供应商信息</a> </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--主体部分-->
+    <div class="layui-body">
+        <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="margin: 0;">
+            <ul class="layui-tab-title"></ul>
+            <div class="layui-tab-content"></div>
+        </div>
+    </div>
+    <!--底部区域-->
+    <div class="layui-footer">
+        医院药品管理系统 -- 底部固定区域
+    </div>
+</div>
 
-    </script>
+<script th:src="@{/layui/layui.js}"></script>
+
+<script>
+    layui.use(['element','layer','jquery'],function () {
+        var element = layui.element;
+        var $ = layui.$;
+        //左侧菜单树叶点击事件
+        $('.site-demo-active').on('click',function () {
+            var dataid = $(this);
+            //判断右侧是否有tab
+            if($(".layui-tab-title li[lay-id]").length<=0){
+                //没有tab，直接打开新的tab
+                active.tabAdd(dataid.attr('lay-href'),dataid.attr('data-id'),dataid.attr('data-title'));
+            }else{
+                //判断该tab项是否已经存在
+                var isExist = false;
+                $.each($(".layui-tab-title li[lay-id]"),function () {
+                    //如果点击左侧菜单栏传入的id在右侧tab项中的lay-id可以找到，说明该tab项已经打开
+                    if($(this).attr("lay-id") == dataid.attr("data-id")){
+                        isExist = true;
+                    }
+                });
+                if(isExist == false){
+                    //不存在当前id对应的tab，直接打开新的tab
+                    active.tabAdd(dataid.attr('lay-href'),dataid.attr('data-id'),dataid.attr('data-title'));
+                }
+            }
+            //不管是不是新增了tab，最后都要转到要打开的选项页面
+            active.tabChange(dataid.attr("data-id"));
+        });
+
+        //配置active，绑定几项事件，后面可以用active调用这些事件
+        var active = {
+            //新增tab项
+            //url是页面地址，id对应data-id,name对应标题
+            tabAdd: function (url,id,name) {
+                element.tabAdd('demo',{
+                    title:name,
+                    content:'<iframe data-frameid="'+id+'" scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:700px;"></iframe>',
+                    id:id
+                });
+            },
+            //根据id切换到指定的tab
+            tabChange: function (id) {
+                element.tabChange('demo',id);
+            },
+            //关闭指定的tab
+            tabDelete: function (id) {
+                element.tabDelete('demo',id);
+            }
+        }
+    });
+</script>
 </body>
 </html>
 
