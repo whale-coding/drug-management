@@ -9,3 +9,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   thymeleaf:
     cache: false
+#配置Mybatis-Plus
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.study.drug.pojo
