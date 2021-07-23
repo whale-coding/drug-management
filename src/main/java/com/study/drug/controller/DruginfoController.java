@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 药品相关的controller
@@ -104,6 +105,17 @@ public class DruginfoController {
         } catch (Exception e){
             return ResultMapUtil.getHashMapException(e);
         }
+    }
+
+
+    /**
+     * 获取所有药品
+     */
+    @RequestMapping(value = "/druginfoList")
+    @ResponseBody
+    public Object druginfoList(){
+        List<Druginfo> druginfoList = druginfoService.queryDruginfoList();
+        return ResultMapUtil.getHashMapList(druginfoList);
     }
 
 }
