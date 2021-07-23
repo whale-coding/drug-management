@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 供应商相关的controller
@@ -109,6 +110,16 @@ public class SupplierController {
         } catch (Exception e){
             return ResultMapUtil.getHashMapException(e);
         }
+    }
+
+    /**
+     * 获取所有供应商
+     */
+    @RequestMapping(value = "/supplieList")
+    @ResponseBody
+    public Object supplieList(){
+        List<Supplier> supplierList = supplierService.querySupplierList();
+        return ResultMapUtil.getHashMapList(supplierList);
     }
 
 }
