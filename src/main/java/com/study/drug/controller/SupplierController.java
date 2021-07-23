@@ -115,9 +115,9 @@ public class SupplierController {
     /**
      * 获取所有供应商
      */
-    @RequestMapping(value = "/supplieList")
+    @RequestMapping(value = "/supplierList")
     @ResponseBody
-    public Object supplieList(){
+    public Object supplierList(){
         List<Supplier> supplierList = supplierService.querySupplierList();
         return ResultMapUtil.getHashMapList(supplierList);
     }
