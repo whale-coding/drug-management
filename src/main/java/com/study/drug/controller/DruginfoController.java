@@ -118,6 +118,14 @@ public class DruginfoController {
         return ResultMapUtil.getHashMapList(druginfoList);
     }
 
+    /**
+     * 转向药品保质期检查页面
+     */
+    @RequestMapping(value = "/warranty")
+    public String warranty(){
+        return "warranty";
+    }
+
 }
 
 
