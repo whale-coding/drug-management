@@ -4,7 +4,7 @@
 医院药品管理系统
 
 #### 软件架构
-软件架构说明
+SpringBoot+Mybatis+Layui
 
 
 #### 安装教程
